@@ -1,15 +1,15 @@
-# React: use webp images now!
+# React: use WebP images now!
 
-Okay, we love React and we want React for several reasons. Efficiency is one of them. But if we want so much efficiency, why do we still use jpeg and png images in our projects? Images in the wpeg format are 30% to 50% smaller than png/jpeg - or even smaller in certain circumstances.
+We love React and we want React for several reasons. Efficiency is one of them. But if we want so much efficiency, why do we still use jpeg and png images in our projects? Images in the WebP format are 30% to 50% smaller than png/jpeg - or even smaller in many cases.
 
-Well, these are a few wpeg "cons" I have found searching around:
+Well, these are a few WebP "cons" I have found searching around:
 
-### *"What's wpeg?"*
-A lot of people do not know that there is this kind of image, that webp is great to use on the web, better than png and jpeg. Webp is an open source image standard created and maintained by Google. You can learn more about wpeg at: https://developers.google.com/speed/webp/
+### *"What's WebP?"*
+A lot of people do not know that there is this kind of image, that WebP is great to use on the web, better than png and jpeg. Webp is an open source image standard created and maintained by Google. You can learn more about WebP at: https://developers.google.com/speed/webp/
 
-### *"But not every browser supports wpeg."*
-Yes, it's true. It is very common a new standard not been adopted immediately. Well, wpeg is not that new, it has been around for years. Modern browsers have long recognized wpeg.
-At the moment this text is being written, these are some browsers supporting wpeg:
+### *"But not every browser supports WebP."*
+Yes, it's true. It is very common a new standard not been adopted immediately. Well, WebP is not that new, it has been around for years. Modern browsers have long recognized WebP.
+At the moment this text is being written, these are some browsers supporting WebP:
 - Chrome (great!).
 - Firefox.
 - Edge.
@@ -18,11 +18,11 @@ At the moment this text is being written, these are some browsers supporting wpe
   
 Okay, but not all browsers. So keep reading, please.
 
-### *"But what about browsers that do not support wpeg?"*
-There is still a minority of users using webp non-compliant browsers.
+### *"But what about browsers that do not support WebP?"*
+There is still a minority of users using WebP non-compliant browsers.
 In this cases you can use the technique I use in my React projects.<br />
-Does the browser support wpeg? Send wpeg.<br />
-The browser does not accept wpeg? Send png/jpeg.<br />
+Does the browser support WebP? Send WebP.<br />
+The browser does not accept WebP? Send png/jpeg.<br />
 That simple.
 
 ### *"Hey, it's not that simple."*
@@ -38,19 +38,19 @@ I will give you the link to my Gihub repository with all the code working inside
 - Npm 6
 
 ## React component
-The React component is called ImageWebp. It will be included in your project replacing the normal img tag. It includes the option to load the image in wpeg format when the browser is compatible.
+The React component is called ImageWebp. It will be included in your project replacing the normal img tag. It includes the option to load the image in WebP format when the browser is compatible.
 
-When rendering the component, React checks if the browser supports wpeg then rendering with srcWebp. Otherwise, render with src.
+When rendering the component, React checks if the browser supports WebP then rendering with srcWebp. Otherwise, render with src.
 
-## Generating webp images
+## Generating WebP images
 
-There are basically two ways to generate webp images:
+There are basically two ways to generate WebP images:
 
-1) **Exporting your original image directly in webp format.**<br />
-Professional image editors, such as Photoshop, already have the option of exporting your image in webp format.
+1) **Exporting your original image directly in WebP format.**<br />
+Professional image editors, such as Photoshop, already have the option of exporting your image in WebP format.
 
 2) **Converting your original image.**<br />
-Google provides a free a program that converts jpeg and png to webp. And do not worry about this program usage, in the example-project you have a script that do all the job for you, automatically generating all your images from the existing png/jpeg in your project.
+Google provides a free a program that converts jpeg and png to WebP. And do not worry about this program usage, in the example-project you have a script that do all the job for you, automatically generating all your images from the existing png/jpeg in your project.
 
 In both export and conversion methods, there are some parameters that let you optimize the image to be generated, helping to maintain a good relationship between quality and size. 
 
@@ -66,12 +66,12 @@ You can test different quality factors and compressions to meet your needs, but 
 
 ## Script for automatic conversion
 
-Within the exemple-project you have a script that automatically scans your entire project for images, and generates the webp images.
+Within the exemple-project you have a script that automatically scans your entire project for images, and generates the WebP images.
 - For jpeg: an image with lossy compression is generated with 30% minimum reduction in file size.
   
-- For png: two images are generated: one with lossyless compression and one with transparent lossy compression. So you can decide which of the two formats is most suitable for a particular png image. This is because depending on the png image, a format can generate a webp with better relation quality/size. But usually lossy transparent is the best choice.
+- For png: two images are generated: one with lossyless compression and one with transparent lossy compression. So you can decide which of the two formats is most suitable for a particular png image. This is because depending on the png image, a format can generate a WebP with better relation quality/size. But usually lossy transparent is the best choice.
 
-Important to note that the script never overwrites an existing webp, it just creates new ones. So if you manually include a webp in your project, the script will never overwrite it.
+Important to note that the script never overwrites an existing WebP, it just creates new ones. So if you manually include a WebP in your project, the script will never overwrite it.
 
     npm run webp
 
@@ -90,6 +90,6 @@ To use the component in your project simply make a copy of the ImageWebp file.
 
 I hope you enjoy the results.
 
-*"If you don't use webp in you projects, you will be assimilated.<br />
+*"If you don't use WebP in you projects, you will be assimilated.<br />
 Resistance is futile. "*<br />
 The Borg.
