@@ -31,12 +31,6 @@ Well, it's not simple until it's working in production, right?
 This process implementation is the reason for this article.
 I will give you the link to my Gihub repository with all the code working inside an example-project, and ready to be reused in your own project.
 
-## Requisits
-
-- React
-- Node 10
-- Npm 6
-
 ## React component
 The React component is called ImageWebp. It will be included in your project replacing the normal img tag. It includes the option to load the image in WebP format when the browser is compatible.
 
@@ -64,29 +58,41 @@ These are the three most commonly used compression types:
 
 You can test different quality factors and compressions to meet your needs, but typically the values ​​used in the exemple-project are efficient in most cases.
 
+## Instaling the example-project
+
+To run de exemple-project, you need:
+
+- Node >= 10
+- Npm >= 6
+
+Then clone, install and run the project:
+
+    git clone git@github.com:imbroisi/medium-react-webp.git
+    cd medium-react-webp
+    npm install
+    npm start
+
+To use the component in your project simply copy the ImageWebp file.
+
 ## Script for automatic conversion
 
 Within the exemple-project you have a script that automatically scans your entire project for images, and generates the WebP images.
+
 - For jpeg: an image with lossy compression is generated with 30% minimum reduction in file size.
   
 - For png: two images are generated: one with lossyless compression and one with transparent lossy compression. So you can decide which of the two formats is most suitable for a particular png image. This is because depending on the png image, a format can generate a WebP with better relation quality/size. But usually lossy transparent is the best choice.
 
 Important to note that the script never overwrites an existing WebP, it just creates new ones. So if you manually include a WebP in your project, the script will never overwrite it.
 
-    npm run webp
+To let the script do their job, just:
 
+    npm run webp
 
 ## Conclusion
 
 You can see the final result from the example-project here:
 
 https://imbroisi.github.io/medium-react-webp/
-
-And this is the example-project repository:
-
-https://github.com/imbroisi/medium-react-webp
-
-To use the component in your project simply make a copy of the ImageWebp file.
 
 I hope you enjoy the results.
 
