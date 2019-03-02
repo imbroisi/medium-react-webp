@@ -5,30 +5,37 @@ Okay, we love React and we want React for several reasons. Efficiency is one of 
 Well, these are a few wpeg "cons" I have found searching around:
 
 ### *"What's wpeg?"*
-A lot of people do not know that there is this kind of image, that it is great to use on the web, better than png and jpeg. It is an open source image standard created and maintained by Google. You can learn more about wpeg at: https://developers.google.com/speed/webp/
+A lot of people do not know that there is this kind of image, that webp is great to use on the web, better than png and jpeg. Webp is an open source image standard created and maintained by Google. You can learn more about wpeg at: https://developers.google.com/speed/webp/
 
 ### *"But not every browser supports wpeg."*
-Yes, it's true. It is common that one new standard is not adopted immediately. Well, wpeg is not that new, it has been around for years. Modern browsers have long recognized wpeg.
+Yes, it's true. It is very common a new standard not been adopted immediately. Well, wpeg is not that new, it has been around for years. Modern browsers have long recognized wpeg.
 At the moment this text is being written, these are some browsers supporting wpeg:
 - Chrome (great!).
 - Firefox.
 - Edge.
 - Opera.
+- And others.
   
 Okay, but not all browsers. So keep reading, please.
 
 ### *"But what about browsers that do not support wpeg?"*
-There is still a minority of webp non-compliant browsers users.
-In this case you can use the technique I use in my React projects.
-Does the browser support wpeg? Send him wpeg.
-The browser does not accept wpeg? Send him png/jpeg.
+There is still a minority of users using webp non-compliant browsers.
+In this cases you can use the technique I use in my React projects.<br />
+Does the browser support wpeg? Send wpeg.<br />
+The browser does not accept wpeg? Send png/jpeg.<br />
 That simple.
 
 ### *"Hey, it's not that simple."*
-Well, it's not simple until it's done, right?
+Well, it's not simple until it's working in production, right?
 
-The implementation of this process is the reason for this article.
+This process implementation is the reason for this article.
 I will give you the link to my Gihub repository with all the code working inside an example-project, and ready to be reused in your own project.
+
+## Requisits
+
+- React
+- Node 10
+- Npm 6
 
 ## React component
 The React component is called ImageWebp. It will be included in your project replacing the normal img tag. It includes the option to load the image in wpeg format when the browser is compatible.
@@ -65,6 +72,11 @@ Within the exemple-project you have a script that automatically scans your entir
 - For png: two images are generated: one with lossyless compression and one with transparent lossy compression. So you can decide which of the two formats is most suitable for a particular png image. This is because depending on the png image, a format can generate a webp with better relation quality/size. But usually lossy transparent is the best choice.
 
 Important to note that the script never overwrites an existing webp, it just creates new ones. So if you manually include a webp in your project, the script will never overwrite it.
+
+    npm run webp
+
+
+## Conclusion
 
 You can see the final result from the example-project here:
 
