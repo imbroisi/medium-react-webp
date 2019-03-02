@@ -1,6 +1,6 @@
 {
   "name": "medium-react-webp",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "homepage": "https://imbroisi.github.io/medium-react-webp/",
   "dependencies": {
@@ -11,11 +11,10 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+
+    "webp": "node ./scripts/generateWebp.js"
   },
   "eslintConfig": {
     "extends": "react-app"
