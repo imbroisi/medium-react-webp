@@ -4,32 +4,34 @@ const transparentImage = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB
 
 const testImages = {
   lossy: 'UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoBAAEADsD+JaQAA3AAAAAA',
-  lossless: 'UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA==',
   alpha: 'UklGRkoAAABXRUJQVlA4WAoAAAAQAAAAAAAAAAAAQUxQSAwAAAARBxAR/Q9ERP8DAABWUDggGAAAABQBAJ0BKgEAAQAAAP4AAA3AAP7mtQAAAA==',
-  animation: 'UklGRlIAAABXRUJQVlA4WAoAAAASAAAAAAAAAAAAQU5JTQYAAAD/////AABBTk1GJgAAAAAAAAAAAAAAAAAAAGQAAABWUDhMDQAAAC8AAAAQBxAREYiI/gcA',
 };
 
 /**
- * Using localStorage to memorize the compatibility test results
- * because you don't need to test again every time you visite the site.
+ * Using localStorage to memorize the compatibility test results.
+ * So you don't need to test again every time you visite the site.
  */
-const isCompatible = JSON.parse(localStorage.getItem('thisBrowserIsWebpCompatible')) || {};
+const isCompatible = JSON.parse(localStorage.getItem('thisBrowserWebpCompatibilty')) || {};
 
 ['lossy', 'alpha'].forEach(type => {
 
   if (isCompatible[type] === undefined) {
 
-    const xqImg = new Image();
+    /**
+     * Testing compatibility for this type
+     */
+
+     const xqImg = new Image();
     xqImg.onload = () => {
       
       isCompatible[type] = (xqImg.width > 0) && (xqImg.height > 0);
-      localStorage.setItem('thisBrowserIsWebpCompatible', JSON.stringify(isCompatible));
+      localStorage.setItem('thisBrowserWebpCompatibilty', JSON.stringify(isCompatible));
 
     }
     xqImg.onerror = () => {
       
       isCompatible[type] = false;
-      localStorage.setItem('thisBrowserIsWebpCompatible', JSON.stringify(isCompatible));
+      localStorage.setItem('thisBrowserWebpCompatibilty', JSON.stringify(isCompatible));
 
     }
     xqImg.src = `data:image/webp;base64,${testImages[type]}`;
@@ -81,8 +83,16 @@ class ImageWebp extends Component {
     
     } else if (isCompatible.alpha === undefined || isCompatible.lossy === undefined) {
 
-      actualSrc = transparentImage;
+      /**
+       * Compatibility test still pending.
+       * It will be done in the next render cycle.
+       */
       setTimeout(() => this.forceUpdate(), 0);
+
+      /**
+       * For now, let's render a transparent image.
+       */
+      actualSrc = transparentImage;
 
     } else {
       
