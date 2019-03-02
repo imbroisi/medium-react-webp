@@ -26,7 +26,7 @@ The browser does not accept WebP? Send png/jpeg.<br />
 That simple.
 
 ### *"Hey, it's not that simple."*
-Well, it's not simple until it's working in production, right?
+Well, we cant't say it's simple until it's working fine in production, right?
 
 This process implementation is the reason for this article.
 I will give you the link to my Gihub repository with all the code working inside an example-project, and ready to be reused in your own project.
