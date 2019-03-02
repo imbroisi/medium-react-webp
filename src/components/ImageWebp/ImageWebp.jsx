@@ -20,8 +20,7 @@ const isCompatible = JSON.parse(localStorage.getItem('thisBrowserWebpCompatibilt
     /**
      * Testing compatibility for this type
      */
-
-     const xqImg = new Image();
+    const xqImg = new Image();
     xqImg.onload = () => {
       
       isCompatible[type] = (xqImg.width > 0) && (xqImg.height > 0);
@@ -84,13 +83,13 @@ class ImageWebp extends Component {
     } else if (isCompatible.alpha === undefined || isCompatible.lossy === undefined) {
 
       /**
-       * Compatibility test still pending.
+       * Compatibility test still pending (it is async).
        * It will be done in the next render cycle.
        */
       setTimeout(() => this.forceUpdate(), 0);
 
       /**
-       * For now, let's render a transparent image.
+       * For now let's render a transparent image.
        */
       actualSrc = transparentImage;
 
