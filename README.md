@@ -7,7 +7,7 @@ Well, these are a few WebP "cons" I have found searching around:
 ### *"What's WebP?"*
 A lot of people do not know that there is this kind of image, that WebP is great to use on the web, better than png and jpeg. Webp is an open source image standard created and maintained by Google. You can learn more about WebP at: https://developers.google.com/speed/webp/
 
-### *"But not every browser supports WebP."*
+### *"But not every browser supports WebP"*
 Yes, it's true. It is very common a new standard not been adopted immediately. Well, WebP is not that new, it has been around for years. Modern browsers have long recognized WebP.
 At the moment this text is being written, these are some browsers supporting WebP:
 - Chrome (great!).
