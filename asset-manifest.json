@@ -1,14 +1,19 @@
 {
-  "main.css": "/medium-react-webp/static/css/main.33cc10f5.chunk.css",
-  "main.js": "/medium-react-webp/static/js/main.a091d0bb.chunk.js",
-  "main.js.map": "/medium-react-webp/static/js/main.a091d0bb.chunk.js.map",
+  "main.css": "/medium-react-webp/static/css/main.246c7762.chunk.css",
+  "main.js": "/medium-react-webp/static/js/main.3962fdad.chunk.js",
+  "main.js.map": "/medium-react-webp/static/js/main.3962fdad.chunk.js.map",
   "runtime~main.js": "/medium-react-webp/static/js/runtime~main.6550b6d2.js",
   "runtime~main.js.map": "/medium-react-webp/static/js/runtime~main.6550b6d2.js.map",
-  "static/js/2.5bf9b2cd.chunk.js": "/medium-react-webp/static/js/2.5bf9b2cd.chunk.js",
-  "static/js/2.5bf9b2cd.chunk.js.map": "/medium-react-webp/static/js/2.5bf9b2cd.chunk.js.map",
+  "static/js/2.5667917e.chunk.js": "/medium-react-webp/static/js/2.5667917e.chunk.js",
+  "static/js/2.5667917e.chunk.js.map": "/medium-react-webp/static/js/2.5667917e.chunk.js.map",
   "index.html": "/medium-react-webp/index.html",
-  "precache-manifest.421f5cc83f813071b6452f5d8cdd6ed3.js": "/medium-react-webp/precache-manifest.421f5cc83f813071b6452f5d8cdd6ed3.js",
+  "precache-manifest.9348699aa2abaeb7c716686015bdcb4d.js": "/medium-react-webp/precache-manifest.9348699aa2abaeb7c716686015bdcb4d.js",
   "service-worker.js": "/medium-react-webp/service-worker.js",
-  "static/css/main.33cc10f5.chunk.css.map": "/medium-react-webp/static/css/main.33cc10f5.chunk.css.map",
-  "static/media/logo.svg": "/medium-react-webp/static/media/logo.5d5d9eef.svg"
+  "static/css/main.246c7762.chunk.css.map": "/medium-react-webp/static/css/main.246c7762.chunk.css.map",
+  "static/media/ana-ivanovic.jpg": "/medium-react-webp/static/media/ana-ivanovic.a0caf92f.jpg",
+  "static/media/ana-ivanovic.webp": "/medium-react-webp/static/media/ana-ivanovic.c3d416c1.webp",
+  "static/media/penguin.png": "/medium-react-webp/static/media/penguin.e76583db.png",
+  "static/media/penguin_lossyalpha.webp": "/medium-react-webp/static/media/penguin_lossyalpha.74d2b579.webp",
+  "static/media/rose.png": "/medium-react-webp/static/media/rose.c7cf6652.png",
+  "static/media/rose_lossyalpha.webp": "/medium-react-webp/static/media/rose_lossyalpha.6a0784d2.webp"
 }
