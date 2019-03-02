@@ -1,68 +1,83 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# React: use webp images now!
 
-## Available Scripts
+Okay, we love React and we want React for several reasons. Efficiency is one of them. But if we want so much efficiency, why do we still use jpeg and png images in our projects? Images in the wpeg format are 30% to 50% smaller than png/jpeg - or even smaller in certain circumstances.
 
-In the project directory, you can run:
+Well, these are a few wpeg "cons" I have found searching around:
 
-### `npm start`
+### *"What's wpeg?"*
+A lot of people do not know that there is this kind of image, that it is great to use on the web, better than png and jpeg. It is an open source image standard created and maintained by Google. You can learn more about wpeg at: https://developers.google.com/speed/webp/
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### *"But not every browser supports wpeg."*
+Yes, it's true. It is common that one new standard is not adopted immediately. Well, wpeg is not that new, it has been around for years. Modern browsers have long recognized wpeg.
+At the moment this text is being written, these are some browsers supporting wpeg:
+- Chrome (great!).
+- Firefox.
+- Edge.
+- Opera.
+  
+Okay, but not all browsers. So keep reading, please.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+### *"But what about browsers that do not support wpeg?"*
+There is still a minority of webp non-compliant browsers users.
+In this case you can use the technique I use in my React projects.
+Does the browser support wpeg? Send him wpeg.
+The browser does not accept wpeg? Send him png/jpeg.
+That simple.
 
-### `npm test`
+### *"Hey, it's not that simple."*
+Well, it's not simple until it's done, right?
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The implementation of this process is the reason for this article.
+I will give you the link to my Gihub repository with all the code working inside an example-project, and ready to be reused in your own project.
 
-### `npm run build`
+## React component
+The React component is called ImageWebp. It will be included in your project replacing the normal img tag. It includes the option to load the image in wpeg format when the browser is compatible.
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+When rendering the component, React checks if the browser supports wpeg then rendering with srcWebp. Otherwise, render with src.
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+## Generating webp images
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+There are basically two ways to generate webp images:
 
-### `npm run eject`
+1) **Exporting your original image directly in webp format.**<br />
+Professional image editors, such as Photoshop, already have the option of exporting your image in webp format.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+2) **Converting your original image.**<br />
+Google provides a free a program that converts jpeg and png to webp. And do not worry about this program usage, in the example-project you have a script that do all the job for you, automatically generating all your images from the existing png/jpeg in your project.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+In both export and conversion methods, there are some parameters that let you optimize the image to be generated, helping to maintain a good relationship between quality and size. 
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+These are the three most commonly used compression types:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- **Lossy**: Lossy compression is based on VP8 key frame encoding. VP8 is a compression format created by On2 Technologies, as successor to the VP6 and VP7 formats. This format admits a small loss of quality (configurable), with considerable decrease in image size.
 
-## Learn More
+- **Lossless**: Lossless compression was developed by the WebP team, and works with insignificant quality losses, but generating larger files.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- **Transparency**: useful for graphic images, using 8-bit alpha channel. Alpha channel works only for lossy compression.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+You can test different quality factors and compressions to meet your needs, but typically the values ​​used in the exemple-project are efficient in most cases.
 
-### Code Splitting
+## Script for automatic conversion
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+Within the exemple-project you have a script that automatically scans your entire project for images, and generates the webp images.
+- For jpeg: an image with lossy compression is generated with 30% minimum reduction in file size.
+  
+- For png: two images are generated: one with lossyless compression and one with transparent lossy compression. So you can decide which of the two formats is most suitable for a particular png image. This is because depending on the png image, a format can generate a webp with better relation quality/size. But usually lossy transparent is the best choice.
 
-### Analyzing the Bundle Size
+Important to note that the script never overwrites an existing webp, it just creates new ones. So if you manually include a webp in your project, the script will never overwrite it.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+You can see the final result from the example-project here:
 
-### Making a Progressive Web App
+https://imbroisi.github.io/medium-react-webp/
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+And this is the example-project repository:
 
-### Advanced Configuration
+https://github.com/imbroisi/medium-react-webp
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+To use the component in your project simply make a copy of the ImageWebp file.
 
-### Deployment
+I hope you enjoy the results.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+*"If you don't use webp in you projects, you will be assimilated.<br />
+Resistance is futile. "*<br />
+The Borg.
