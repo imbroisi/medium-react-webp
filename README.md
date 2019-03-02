@@ -90,11 +90,11 @@ To let the script do their job, just:
 
 ## Conclusion
 
-You can see the final result from the example-project here:
+You can see the final production result from the example-project here:
 
 https://imbroisi.github.io/medium-react-webp/
 
-I hope you enjoy the results.
+I hope you enjoy the results in your project.
 
 *"If you don't use WebP in you projects, you will be assimilated.<br />
 Resistance is futile. "*<br />
