@@ -100,7 +100,7 @@ class ImageWebp extends Component {
       
       actualSrc = src;
     
-    } else if (!this.isCompatible.alpha || !this.isCompatible.lossy) {
+    } else if (this.isCompatible.alpha === undefined || this.isCompatible.lossy === undefined) {
 
       /**
        * Compatibility test not done yet.
