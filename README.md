@@ -1,37 +1,51 @@
 # React: use WebP images now!
 
-We love React and we want React for several reasons. Efficiency is one of them. But if we want so much efficiency, why do we still use jpeg and png images in our projects? Images in the WebP format are 30% to 50% smaller than png/jpeg - or even smaller in many cases.
+## How to easily use WebP in your React projects.
+
+We love React and we want React for several reasons. Efficiency is one of them. But if we want so much efficiency, why do we still use jpeg and png images in our projects? Images in the WebP format are 30% to 50% smaller than png/jpeg - or even smaller in many cases.
 
 Well, these are a few WebP "cons" I have found searching around:
 
 ### *"What's WebP?"*
-A lot of people do not know that there is this kind of image, that WebP is great to use on the web, better than png and jpeg. Webp is an open source image standard created and maintained by Google. You can learn more about WebP at: https://developers.google.com/speed/webp/
+
+Many people are unaware that this type of image exists, that WebP is great to be used on the web, better than png and jpeg. 
+Webp is an open source image standard created and maintained by Google. You can learn more about WebP at: https://developers.google.com/speed/webp/
 
 ### *"But not every browser supports WebP"*
-Yes, it's true. It is very common a new standard not been adopted immediately. Well, WebP is not that new, it has been around for years. Modern browsers have long recognized WebP.
-At the moment this text is being written, these are some browsers supporting WebP:
+
+Yes, it's true. It is very common that a new standard is not adopted immediately. That's a big problem for WebP, isn't it?<br />
+No, it is not.<br />
+WebP is not so new. It's been around for years, and modern browsers have long recognized WebP. At the moment this text is being written, these are some browsers supporting WebP:
+
 - Chrome (great!).
 - Firefox.
 - Edge.
 - Opera.
-- And others.
+- And many others.
   
 Okay, but not all browsers. So keep reading, please.
 
 ### *"But what about browsers that do not support WebP?"*
-There is still a minority of users using WebP non-compliant browsers.
-In this cases you can use the technique I use in my React projects.<br />
-Does the browser support WebP? Send WebP.<br />
-The browser does not accept WebP? Send png/jpeg.<br />
+
+There is still a minority of users using browsers not compatible with WebP.
+Another big problem for WebP? No, it is not too.<br />
+For this cases you will use the same technique I use in my React projects.<br />
+Does the browser support WebP? React gives WebP.<br />
+The browser does not accept WebP? React gives png/jpeg.<br />
 That simple.
 
 ### *"Hey, it's not that simple."*
+
 Well, we cant't say it's simple until it's working fine in production, right?
 
-This process implementation is the reason for this article.
-I will give you the link to my Gihub repository with all the code working inside an example-project, and ready to be reused in your own project.
+So, how to do that is the reason I am writing now.
+
+At the end for this article you will have the link to my Gihub repository with all the code working inside an example-project, and ready to be reused in your own project.
+
+But first, some explanation.
 
 ## React component
+
 The React component is called ImageWebp. It will be included in your project replacing the normal img tag. It includes the option to load the image in WebP format when the browser is compatible.
 
 When rendering the component, React checks if the browser supports WebP then rendering with srcWebp. Otherwise, render with src.

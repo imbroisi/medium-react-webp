@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 
-const transparentImage = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
-
-const testImages = {
-  lossy: 'UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoBAAEADsD+JaQAA3AAAAAA',
-  alpha: 'UklGRkoAAABXRUJQVlA4WAoAAAAQAAAAAAAAAAAAQUxQSAwAAAARBxAR/Q9ERP8DAABWUDggGAAAABQBAJ0BKgEAAQAAAP4AAA3AAP7mtQAAAA==',
+/**
+ * Test images from https://developers.google.com/speed/webp/faq#how_can_i_detect_browser_support_for_webp
+ */
+const webpTestImages = {
+  lossy: "UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoBAAEADsD+JaQAA3AAAAAA",
+  lossless: "UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA==",
+  alpha: "UklGRkoAAABXRUJQVlA4WAoAAAAQAAAAAAAAAAAAQUxQSAwAAAARBxAR/Q9ERP8DAABWUDggGAAAABQBAJ0BKgEAAQAAAP4AAA3AAP7mtQAAAA==",
+  animation: "UklGRlIAAABXRUJQVlA4WAoAAAASAAAAAAAAAAAAQU5JTQYAAAD/////AABBTk1GJgAAAAAAAAAAAAAAAAAAAGQAAABWUDhMDQAAAC8AAAAQBxAREYiI/gcA"
 };
 
 /**
@@ -13,31 +16,31 @@ const testImages = {
  */
 const isCompatible = JSON.parse(localStorage.getItem('thisBrowserWebpCompatibilty')) || {};
 
-['lossy', 'alpha'].forEach(type => {
+Object.keys(webpTestImages).forEach(type => {
 
-  if (isCompatible[type] === undefined) {
+  if (isCompatible[type] !== undefined) return; // already defined, go next type
 
-    /**
-     * Testing compatibility for this type
-     */
-    const xqImg = new Image();
-    xqImg.onload = () => {
-      
-      isCompatible[type] = (xqImg.width > 0) && (xqImg.height > 0);
-      localStorage.setItem('thisBrowserWebpCompatibilty', JSON.stringify(isCompatible));
-
-    }
-    xqImg.onerror = () => {
-      
-      isCompatible[type] = false;
-      localStorage.setItem('thisBrowserWebpCompatibilty', JSON.stringify(isCompatible));
-
-    }
-    xqImg.src = `data:image/webp;base64,${testImages[type]}`;
+  /**
+   * Testing compatibility for this type
+   */
+  const xqImg = new Image();
+  xqImg.onload = () => {
+    
+    isCompatible[type] = (xqImg.width > 0) && (xqImg.height > 0);
+    localStorage.setItem('thisBrowserWebpCompatibilty', JSON.stringify(isCompatible));
 
   }
+  xqImg.onerror = () => {
+    
+    isCompatible[type] = false;
+    localStorage.setItem('thisBrowserWebpCompatibilty', JSON.stringify(isCompatible));
+
+  }
+  xqImg.src = `data:image/webp;base64,${webpTestImages[type]}`;
 
 });
+
+const transparentImage = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
 
 class ImageWebp extends Component {
 
@@ -83,8 +86,8 @@ class ImageWebp extends Component {
     } else if (isCompatible.alpha === undefined || isCompatible.lossy === undefined) {
 
       /**
-       * Compatibility test still pending (it is async).
-       * It will be done in the next render cycle.
+       * Compatibility test still pending.
+       * It will be finished in the next render cycle.
        */
       setTimeout(() => this.forceUpdate(), 0);
 
