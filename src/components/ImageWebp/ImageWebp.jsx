@@ -14,12 +14,11 @@ class ImageWebp extends Component {
 
   componentDidMount = () => {
 
-    if (!this.haveToTestCompatibility) return;
+    if (this.haveToTestCompatibility) {
 
-    this._testCompatibility();
+      this._testCompatibility();
 
-    // image loading is async, so you must render Component again
-    setTimeout(() => this.forceUpdate(), 0);
+    }
 
   }
 
@@ -58,6 +57,11 @@ class ImageWebp extends Component {
       xqImg.src = `data:image/webp;base64,${webpTestImages[type]}`;
 
     });
+
+    /**
+     * image load is async, so you must render Component again
+     */
+    setTimeout(() => this.forceUpdate(), 0);
 
   }
 
