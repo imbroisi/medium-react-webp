@@ -35,8 +35,6 @@ class ImageWebp extends Component {
       animation: "UklGRlIAAABXRUJQVlA4WAoAAAASAAAAAAAAAAAAQU5JTQYAAAD/////AABBTk1GJgAAAAAAAAAAAAAAAAAAAGQAAABWUDhMDQAAAC8AAAAQBxAREYiI/gcA"
     };
 
-    // this.isCompatible = JSON.parse(localStorage.getItem('thisBrowserWebpCompatibilty')) || {};
-
     Object.keys(webpTestImages).forEach(type => {
 
       if (this.isCompatible[type] !== undefined) return; // already defined, go next type
