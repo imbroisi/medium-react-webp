@@ -4,7 +4,7 @@ self.__precacheManifest = [
     "url": "/medium-react-webp/static/media/penguin.e76583db.png"
   },
   {
-    "revision": "50c5a770dd3949ec534c",
+    "revision": "a40193b5c252d1e1afa6",
     "url": "/medium-react-webp/static/css/main.246c7762.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = [
     "url": "/medium-react-webp/static/media/ana-ivanovic.a0caf92f.jpg"
   },
   {
-    "revision": "50c5a770dd3949ec534c",
-    "url": "/medium-react-webp/static/js/main.50c5a770.chunk.js"
+    "revision": "a40193b5c252d1e1afa6",
+    "url": "/medium-react-webp/static/js/main.a40193b5.chunk.js"
   },
   {
     "revision": "c7cf665262fc289aea5bbe16b4f9aa67",
@@ -40,7 +40,7 @@ self.__precacheManifest = [
     "url": "/medium-react-webp/static/media/rose_lossyalpha.6a0784d2.webp"
   },
   {
-    "revision": "96bd18f2344e102bc0ed4657dc819437",
+    "revision": "13fd20dcbbd4b600117eb6bab193a33e",
     "url": "/medium-react-webp/index.html"
   }
 ];
