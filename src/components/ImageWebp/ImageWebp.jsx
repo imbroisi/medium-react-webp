@@ -1,48 +1,67 @@
 import React, { Component } from 'react';
 
-/**
- * Test images from https://developers.google.com/speed/webp/faq#how_can_i_detect_browser_support_for_webp
- */
-const webpTestImages = {
-  lossy: "UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoBAAEADsD+JaQAA3AAAAAA",
-  lossless: "UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA==",
-  alpha: "UklGRkoAAABXRUJQVlA4WAoAAAAQAAAAAAAAAAAAQUxQSAwAAAARBxAR/Q9ERP8DAABWUDggGAAAABQBAJ0BKgEAAQAAAP4AAA3AAP7mtQAAAA==",
-  animation: "UklGRlIAAABXRUJQVlA4WAoAAAASAAAAAAAAAAAAQU5JTQYAAAD/////AABBTk1GJgAAAAAAAAAAAAAAAAAAAGQAAABWUDhMDQAAAC8AAAAQBxAREYiI/gcA"
-};
-
-/**
- * Using localStorage to memorize the compatibility test results.
- * So you don't need to test again every time you visite the site.
- */
-const isCompatible = JSON.parse(localStorage.getItem('thisBrowserWebpCompatibilty')) || {};
-
-Object.keys(webpTestImages).forEach(type => {
-
-  if (isCompatible[type] !== undefined) return; // already defined, go next type
-
-  /**
-   * Testing compatibility for this type
-   */
-  const xqImg = new Image();
-  xqImg.onload = () => {
-    
-    isCompatible[type] = (xqImg.width > 0) && (xqImg.height > 0);
-    localStorage.setItem('thisBrowserWebpCompatibilty', JSON.stringify(isCompatible));
-
-  }
-  xqImg.onerror = () => {
-    
-    isCompatible[type] = false;
-    localStorage.setItem('thisBrowserWebpCompatibilty', JSON.stringify(isCompatible));
-
-  }
-  xqImg.src = `data:image/webp;base64,${webpTestImages[type]}`;
-
-});
-
 const transparentImage = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
 
 class ImageWebp extends Component {
+
+  /**
+   * Using localStorage to memorize the compatibility test results.
+   * So you don't need to test again every time you visite the site.
+   */
+  isCompatible = JSON.parse(localStorage.getItem('thisBrowserWebpCompatibilty')) || {};
+
+  haveToTestCompatibility = false;
+
+  componentDidMount = () => {
+
+    if (!this.haveToTestCompatibility) return;
+
+    this._testCompatibility();
+
+    // image loading is async, so you must render Component again
+    setTimeout(() => this.forceUpdate(), 0);
+
+  }
+
+  _testCompatibility = () => {
+
+    /**
+     * Test images from https://developers.google.com/speed/webp/faq#how_can_i_detect_browser_support_for_webp
+     */
+    const webpTestImages = {
+      lossy: "UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoBAAEADsD+JaQAA3AAAAAA",
+      lossless: "UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA==",
+      alpha: "UklGRkoAAABXRUJQVlA4WAoAAAAQAAAAAAAAAAAAQUxQSAwAAAARBxAR/Q9ERP8DAABWUDggGAAAABQBAJ0BKgEAAQAAAP4AAA3AAP7mtQAAAA==",
+      animation: "UklGRlIAAABXRUJQVlA4WAoAAAASAAAAAAAAAAAAQU5JTQYAAAD/////AABBTk1GJgAAAAAAAAAAAAAAAAAAAGQAAABWUDhMDQAAAC8AAAAQBxAREYiI/gcA"
+    };
+
+    // this.isCompatible = JSON.parse(localStorage.getItem('thisBrowserWebpCompatibilty')) || {};
+
+    Object.keys(webpTestImages).forEach(type => {
+
+      if (this.isCompatible[type] !== undefined) return; // already defined, go next type
+
+      /**
+       * Testing compatibility for this type
+       */
+      const xqImg = new Image();
+      xqImg.onload = () => {
+        
+        this.isCompatible[type] = (xqImg.width > 0) && (xqImg.height > 0);
+        localStorage.setItem('thisBrowserWebpCompatibilty', JSON.stringify(this.isCompatible));
+
+      }
+      xqImg.onerror = () => {
+        
+        this.isCompatible[type] = false;
+        localStorage.setItem('thisBrowserWebpCompatibilty', JSON.stringify(this.isCompatible));
+
+      }
+      xqImg.src = `data:image/webp;base64,${webpTestImages[type]}`;
+
+    });
+
+  }
 
   _onLoad = (e) => {
     
@@ -83,14 +102,14 @@ class ImageWebp extends Component {
       
       actualSrc = src;
     
-    } else if (isCompatible.alpha === undefined || isCompatible.lossy === undefined) {
+    } else if (!this.isCompatible.alpha || !this.isCompatible.lossy) {
 
       /**
-       * Compatibility test still pending.
-       * It will be finished in the next render cycle.
+       * Compatibility test not done yet.
+       * It will be ok in the next render cycle.
        */
-      setTimeout(() => this.forceUpdate(), 0);
-
+      this.haveToTestCompatibility = true;
+       
       /**
        * For now let's render a transparent image.
        */
@@ -100,11 +119,11 @@ class ImageWebp extends Component {
       
       if (srcWebp.lastIndexOf('.png') === srcWebp.length - 4) {
 
-        actualSrc = isCompatible.alpha ? srcWebp : src;
+        actualSrc = this.isCompatible.alpha ? srcWebp : src;
 
       } else {
 
-        actualSrc = isCompatible.lossy ? srcWebp : src;
+        actualSrc = this.isCompatible.lossy ? srcWebp : src;
 
       }
 
