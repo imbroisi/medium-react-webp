@@ -1,31 +1,38 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
 const transparentImage = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
 
-class ImageWebp extends Component {
+/**
+ * Using localStorage to memorize the compatibility test results.
+ * So you don't need to test again every time you visite the site.
+ */
+let compatibilityInfo = JSON.parse(localStorage.getItem('thisBrowserWebpCompatibilty'));
 
-  /**
-   * Using localStorage to memorize the compatibility test results.
-   * So you don't need to test again every time you visite the site.
-   */
-  isCompatible = JSON.parse(localStorage.getItem('thisBrowserWebpCompatibilty')) || {};
+class ImageWebp extends PureComponent {
 
-  haveToTestCompatibility = false;
+  actualSrc = null;
 
   componentDidMount = () => {
 
-    if (this.haveToTestCompatibility) {
+    /**
+     * this.actualSrc === transparentImage signs you have to test compatibility.
+     */
+    if (this.actualSrc !== transparentImage) return;
+    
+    /**
+     * compatibilityInfo is common for all ImageWebp components in the project.
+     * Here it may be already set by another ImageWebp component.
+     */
+    if (!compatibilityInfo) this._testCompatibility();
 
-      this._testCompatibility();
-
-    }
+    this.forceUpdate();
 
   }
 
   _testCompatibility = () => {
 
     /**
-     * Test images from https://developers.google.com/speed/webp/faq#how_can_i_detect_browser_support_for_webp
+     * Test images data from https://developers.google.com/speed/webp/faq#how_can_i_detect_browser_support_for_webp
      */
     const webpTestImages = {
       lossy: "UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoBAAEADsD+JaQAA3AAAAAA",
@@ -34,34 +41,29 @@ class ImageWebp extends Component {
       animation: "UklGRlIAAABXRUJQVlA4WAoAAAASAAAAAAAAAAAAQU5JTQYAAAD/////AABBTk1GJgAAAAAAAAAAAAAAAAAAAGQAAABWUDhMDQAAAC8AAAAQBxAREYiI/gcA"
     };
 
-    Object.keys(webpTestImages).forEach(type => {
+    compatibilityInfo = {};
 
-      if (this.isCompatible[type] !== undefined) return; // already defined, go next type
+    Object.keys(webpTestImages).forEach(type => {
 
       /**
        * Testing compatibility for this type
        */
       const xqImg = new Image();
       xqImg.onload = () => {
-        
-        this.isCompatible[type] = (xqImg.width > 0) && (xqImg.height > 0);
-        localStorage.setItem('thisBrowserWebpCompatibilty', JSON.stringify(this.isCompatible));
+
+        compatibilityInfo[type] = (xqImg.width > 0) && (xqImg.height > 0);
+        localStorage.setItem('thisBrowserWebpCompatibilty', JSON.stringify(compatibilityInfo));
 
       }
       xqImg.onerror = () => {
         
-        this.isCompatible[type] = false;
-        localStorage.setItem('thisBrowserWebpCompatibilty', JSON.stringify(this.isCompatible));
+        compatibilityInfo[type] = false;
+        localStorage.setItem('thisBrowserWebpCompatibilty', JSON.stringify(compatibilityInfo));
 
       }
       xqImg.src = `data:image/webp;base64,${webpTestImages[type]}`;
 
     });
-
-    /**
-     * image load is async, so you must render Component again
-     */
-    setTimeout(() => this.forceUpdate(), 0);
 
   }
 
@@ -98,42 +100,39 @@ class ImageWebp extends Component {
       alt = '',
     } = this.props;
 
-    let actualSrc;
-
     if (!srcWebp) {
       
-      actualSrc = src;
+      this.actualSrc = src;
     
-    } else if (this.isCompatible.alpha === undefined || this.isCompatible.lossy === undefined) {
+    } else if (compatibilityInfo) {
 
-      /**
-       * Compatibility test not done yet.
-       * It will be ok in the next render cycle.
-       */
-      this.haveToTestCompatibility = true;
-       
-      /**
-       * For now let's render a transparent image.
-       */
-      actualSrc = transparentImage;
-
-    } else {
-      
       if (srcWebp.lastIndexOf('.png') === srcWebp.length - 4) {
 
-        actualSrc = this.isCompatible.alpha ? srcWebp : src;
+        this.actualSrc = compatibilityInfo.alpha ? srcWebp : src;
 
       } else {
 
-        actualSrc = this.isCompatible.lossy ? srcWebp : src;
+        this.actualSrc = compatibilityInfo.lossy ? srcWebp : src;
 
       }
+
+    } else {
+
+      /**
+       * Compatibility test not done yet, it will be done in componentDidMount()
+       * 
+       * For now let's render a transparent image.
+       * 
+       * this.actualSrc = transparentImage will also sign to
+       * componentDidMount() the need for the compatibility test
+       */
+      this.actualSrc = transparentImage;
 
     }
 
     return (
       <img
-        src={actualSrc}
+        src={this.actualSrc}
         className={className}
         style={style}
         onLoad={this._onLoad}

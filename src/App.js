@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
 import ImageWebp from './components/ImageWebp/ImageWebp';
 
@@ -11,41 +11,33 @@ import roseWebp from './images/rose_lossyalpha.webp';
 
 import './App.css';
 
-class App extends Component {
+class App extends PureComponent {
 
-  state = {
-    AnaTitle: '(jpg)',
-    PenguinTitle: '(png)',
-    RoseTitle: '(png)',
-  };
+  anaIvanovicType = React.createRef();
+  penguinType = React.createRef();
+  roseType = React.createRef();
 
   _checkImageLoadedIsWebp = (e) => (e.target.src.lastIndexOf('.webp') === e.target.src.length - 5);
   
   _setTitleAna = (e) => {
     
-    if (this._checkImageLoadedIsWebp(e)) this.setState({ AnaTitle: '(webp lossy)' }); 
+    if (this._checkImageLoadedIsWebp(e)) this.refs.anaIvanovicType.innerHTML = '(webp lossy)'; 
  
   }
   
   _setTitlePenguin = (e) => {
     
-    if (this._checkImageLoadedIsWebp(e)) this.setState({ PenguinTitle: '(webp lossy transparency)' }); 
+    if (this._checkImageLoadedIsWebp(e)) this.refs.penguinType.innerHTML = '(webp lossy transparency)'; 
 
   }
   
   _setTitleRose = (e) => {
     
-    if (this._checkImageLoadedIsWebp(e)) this.setState({ RoseTitle: '(webp lossy transparency)' }); 
+    if (this._checkImageLoadedIsWebp(e)) this.refs.roseType.innerHTML = '(webp lossy transparency)'; 
 
   }
 
   render() {
-
-    const {
-      AnaTitle,
-      PenguinTitle,
-      RoseTitle,
-    } = this.state;
 
     return (
       <div className="App">
@@ -104,7 +96,7 @@ class App extends Component {
                 height="600"
                 onLoad={this._setTitleAna}
               />
-              <div> Ana Ivanovic {AnaTitle}</div>
+              <div> Ana Ivanovic <span ref="anaIvanovicType"></span></div>
             </div>
       
             <div className="App-item">
@@ -115,7 +107,7 @@ class App extends Component {
                 height="395"
                 onLoad={this._setTitlePenguin}
               />
-              <div> Penguin {PenguinTitle}</div>
+              <div> Penguin <span ref="penguinType"></span></div>
             </div>
 
             <div className="App-item">
@@ -126,7 +118,7 @@ class App extends Component {
                 height="401"
                 onLoad={this._setTitleRose}
               />
-              <div> Rose {RoseTitle}</div>
+              <div> Rose <span ref="roseType"></span></div>
             </div>
 
           </div>
