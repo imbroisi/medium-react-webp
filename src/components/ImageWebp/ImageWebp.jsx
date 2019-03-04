@@ -15,21 +15,21 @@ class ImageWebp extends PureComponent {
   componentDidMount = () => {
 
     /**
-     * this.actualSrc === transparentImage signs you have to test compatibility.
+     * this.actualSrc === transparentImage signs we have to test compatibility.
      */
     if (this.actualSrc !== transparentImage) return;
     
     /**
      * compatibilityInfo is common for all ImageWebp components in the project.
-     * Here it may be already set by another ImageWebp component.
+     * Here it may already been set by another ImageWebp component.
      */
-    if (!compatibilityInfo) this._testCompatibility();
+    if (!compatibilityInfo) this._compatibilityTest();
 
     this.forceUpdate();
 
   }
 
-  _testCompatibility = () => {
+  _compatibilityTest = () => {
 
     /**
      * Test images data from https://developers.google.com/speed/webp/faq#how_can_i_detect_browser_support_for_webp
