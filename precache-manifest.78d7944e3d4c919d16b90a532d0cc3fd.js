@@ -40,7 +40,7 @@ self.__precacheManifest = [
     "url": "/medium-react-webp/static/media/rose_lossyalpha.6a0784d2.webp"
   },
   {
-    "revision": "c3999990939796aff0adc280618bda57",
+    "revision": "fe528ebdebc413cbbc1a915490a6bd90",
     "url": "/medium-react-webp/index.html"
   }
 ];
