@@ -115,7 +115,7 @@ class App extends PureComponent {
                 srcWebp={roseWebp}
                 src={rosePng}
                 width="400"
-                height="401"
+                height="301"
                 onLoad={this._setTitleRose}
               />
               <div> Rose <span ref="roseType">(png with transparency)</span></div>
