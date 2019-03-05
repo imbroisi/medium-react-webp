@@ -76,7 +76,7 @@ class App extends PureComponent {
               <img
                 src={rosePng}
                 width="400"
-                height="401"
+                height="301"
                 alt=""
               />
               <div> Rose (png with transparency)</div>
@@ -96,7 +96,7 @@ class App extends PureComponent {
                 height="600"
                 onLoad={this._setTitleAna}
               />
-              <div> Ana Ivanovic <span ref="anaIvanovicType"></span></div>
+              <div> Ana Ivanovic <span ref="anaIvanovicType">(jpg)</span></div>
             </div>
       
             <div className="App-item">
@@ -107,7 +107,7 @@ class App extends PureComponent {
                 height="395"
                 onLoad={this._setTitlePenguin}
               />
-              <div> Penguin <span ref="penguinType"></span></div>
+              <div> Penguin <span ref="penguinType">(png with transparency)</span></div>
             </div>
 
             <div className="App-item">
@@ -115,10 +115,10 @@ class App extends PureComponent {
                 srcWebp={roseWebp}
                 src={rosePng}
                 width="400"
-                height="401"
+                height="301"
                 onLoad={this._setTitleRose}
               />
-              <div> Rose <span ref="roseType"></span></div>
+              <div> Rose <span ref="roseType">(png with transparency)</span></div>
             </div>
 
           </div>
