@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 
 const transparentImage = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
 
@@ -21,7 +22,8 @@ class ImageWebp extends PureComponent {
     
     /**
      * compatibilityInfo is common for all ImageWebp components in the project.
-     * Here it may already been set by another ImageWebp component.
+     * 
+     * Check if it is already set by another ImageWebp component.
      */
     if (!compatibilityInfo) this._compatibilityTest();
 
@@ -92,19 +94,15 @@ class ImageWebp extends PureComponent {
 
     const {
       src,
-      srcWebp = null,
-      className = null,
-      style = null,
-      width = null,
-      height = null,
-      alt = '',
+      srcWebp,
+      className,
+      style,
+      width,
+      height,
+      alt,
     } = this.props;
 
-    if (!srcWebp) {
-      
-      this.actualSrc = src;
-    
-    } else if (compatibilityInfo) {
+    if (compatibilityInfo) {
 
       if (srcWebp.lastIndexOf('.png') === srcWebp.length - 4) {
 
@@ -147,5 +145,36 @@ class ImageWebp extends PureComponent {
   }
 
 }
+
+ImageWebp.propTypes = {
+  src: PropTypes.string.isRequired,
+  srcWebp: PropTypes.string.isRequired,
+  className: PropTypes.string,
+  style: PropTypes.objectOf(PropTypes.any),
+  width: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]),
+  height: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]),
+  onLoad: PropTypes.func,
+  onMouseMove: PropTypes.func,
+  onMouseLeave: PropTypes.func,
+  alt: PropTypes.string,
+};
+
+ImageWebp.defaultProps = {
+  className: null,
+  style: null,
+  width: null,
+  height: null,
+  onLoad: null,
+  onMouseMove: null,
+  onMouseLeave: null,
+  alt: '',
+};
+
 
 export default ImageWebp;
