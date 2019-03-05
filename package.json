@@ -16,11 +16,7 @@
     "webp": "node ./scripts/generateWebp.js"
   },
   "devDependencies": {
-    "prop-types": "^15.6.2",
-    "eslint-config-airbnb": "^17.0.0",
-    "eslint-plugin-import": "^2.13.0",
-    "eslint-plugin-jsx-a11y": "^6.1.1",
-    "eslint-plugin-react": "^7.10.0"
+    "prop-types": "^15.6.2"
   },
   "eslintConfig": {
     "extends": "react-app"
