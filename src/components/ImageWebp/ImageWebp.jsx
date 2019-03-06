@@ -104,7 +104,7 @@ class ImageWebp extends PureComponent {
 
     if (compatibilityInfo) {
 
-      if (srcWebp.lastIndexOf('.png') === srcWebp.length - 4) {
+      if (src.lastIndexOf('.png') === src.length - 4) {
 
         this.actualSrc = compatibilityInfo.alpha ? srcWebp : src;
 
