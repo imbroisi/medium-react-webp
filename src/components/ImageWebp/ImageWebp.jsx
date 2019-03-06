@@ -22,7 +22,7 @@ class ImageWebp extends PureComponent {
     
     /**
      * compatibilityInfo is common for all ImageWebp components in the project.
-     * 
+     *
      * Check if it is already set by another ImageWebp component.
      */
     if (!compatibilityInfo) this._compatibilityTest();
@@ -37,15 +37,15 @@ class ImageWebp extends PureComponent {
      * Test images data from https://developers.google.com/speed/webp/faq#how_can_i_detect_browser_support_for_webp
      */
     const webpTestImages = {
-      lossy: "UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoBAAEADsD+JaQAA3AAAAAA",
-      lossless: "UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA==",
-      alpha: "UklGRkoAAABXRUJQVlA4WAoAAAAQAAAAAAAAAAAAQUxQSAwAAAARBxAR/Q9ERP8DAABWUDggGAAAABQBAJ0BKgEAAQAAAP4AAA3AAP7mtQAAAA==",
-      animation: "UklGRlIAAABXRUJQVlA4WAoAAAASAAAAAAAAAAAAQU5JTQYAAAD/////AABBTk1GJgAAAAAAAAAAAAAAAAAAAGQAAABWUDhMDQAAAC8AAAAQBxAREYiI/gcA"
+      lossy: 'UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoBAAEADsD+JaQAA3AAAAAA',
+      lossless: 'UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA==',
+      alpha: 'UklGRkoAAABXRUJQVlA4WAoAAAAQAAAAAAAAAAAAQUxQSAwAAAARBxAR/Q9ERP8DAABWUDggGAAAABQBAJ0BKgEAAQAAAP4AAA3AAP7mtQAAAA==',
+      animation: 'UklGRlIAAABXRUJQVlA4WAoAAAASAAAAAAAAAAAAQU5JTQYAAAD/////AABBTk1GJgAAAAAAAAAAAAAAAAAAAGQAAABWUDhMDQAAAC8AAAAQBxAREYiI/gcA',
     };
 
     compatibilityInfo = {};
 
-    Object.keys(webpTestImages).forEach(type => {
+    Object.keys(webpTestImages).forEach((type) => {
 
       /**
        * Testing compatibility for this type
@@ -56,13 +56,13 @@ class ImageWebp extends PureComponent {
         compatibilityInfo[type] = (xqImg.width > 0) && (xqImg.height > 0);
         localStorage.setItem('thisBrowserWebpCompatibilty', JSON.stringify(compatibilityInfo));
 
-      }
+      };
       xqImg.onerror = () => {
         
         compatibilityInfo[type] = false;
         localStorage.setItem('thisBrowserWebpCompatibilty', JSON.stringify(compatibilityInfo));
 
-      }
+      };
       xqImg.src = `data:image/webp;base64,${webpTestImages[type]}`;
 
     });
@@ -118,9 +118,9 @@ class ImageWebp extends PureComponent {
 
       /**
        * Compatibility test not done yet, it will be done in componentDidMount()
-       * 
+       *
        * For now let's render a transparent image.
-       * 
+       *
        * this.actualSrc = transparentImage will also sign to
        * componentDidMount() the need for the compatibility test
        */
@@ -153,11 +153,11 @@ ImageWebp.propTypes = {
   style: PropTypes.objectOf(PropTypes.any),
   width: PropTypes.oneOfType([
     PropTypes.string,
-    PropTypes.number
+    PropTypes.number,
   ]),
   height: PropTypes.oneOfType([
     PropTypes.string,
-    PropTypes.number
+    PropTypes.number,
   ]),
   onLoad: PropTypes.func,
   onMouseMove: PropTypes.func,
