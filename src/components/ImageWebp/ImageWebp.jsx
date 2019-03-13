@@ -5,9 +5,68 @@ const transparentImage = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB
 
 /**
  * Using localStorage to memorize the compatibility test results.
- * So you don't need to test again every time you visite the site.
+ * So we don't need to test again every time you visite the site.
  */
-let compatibilityInfo = JSON.parse(localStorage.getItem('thisBrowserWebpCompatibilty'));
+const getWebpCompatibilityInfo = () => JSON.parse(localStorage.getItem('thisBrowserWebpCompatibilty'));
+const saveWebpCompatibilityInfo = info => localStorage.setItem('thisBrowserWebpCompatibilty', JSON.stringify(info));
+
+let webpCompatibilityInfo = getWebpCompatibilityInfo();
+
+const webpCompatibilityTest = () => {
+
+  /**
+   * Test images data from https://developers.google.com/speed/webp/faq#how_can_i_detect_browser_support_for_webp
+   */
+  const webpTestImages = {
+    lossy: 'UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoBAAEADsD+JaQAA3AAAAAA',
+    lossless: 'UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA==',
+    alpha: 'UklGRkoAAABXRUJQVlA4WAoAAAAQAAAAAAAAAAAAQUxQSAwAAAARBxAR/Q9ERP8DAABWUDggGAAAABQBAJ0BKgEAAQAAAP4AAA3AAP7mtQAAAA==',
+    animation: 'UklGRlIAAABXRUJQVlA4WAoAAAASAAAAAAAAAAAAQU5JTQYAAAD/////AABBTk1GJgAAAAAAAAAAAAAAAAAAAGQAAABWUDhMDQAAAC8AAAAQBxAREYiI/gcA',
+  };
+
+  const webpTestImagesKeys = Object.keys(webpTestImages);
+  let nCompatible = 0;
+  webpCompatibilityInfo = { NONE: true };
+
+  webpTestImagesKeys.forEach((type) => {
+
+    /**
+     * Testing compatibility for this type
+     */
+    const xqImg = new Image();
+    xqImg.onload = () => {
+
+      webpCompatibilityInfo[type] = (xqImg.width > 0) && (xqImg.height > 0);
+
+      if (webpCompatibilityInfo[type]) {
+      
+        webpCompatibilityInfo.NONE = false;
+        nCompatible += 1;
+
+        if (nCompatible === webpTestImagesKeys.length) webpCompatibilityInfo.ALL = true;
+
+      }
+
+      saveWebpCompatibilityInfo(webpCompatibilityInfo);
+
+    };
+    xqImg.onerror = () => {
+      
+      webpCompatibilityInfo[type] = false;
+      saveWebpCompatibilityInfo(webpCompatibilityInfo);
+
+    };
+    xqImg.src = `data:image/webp;base64,${webpTestImages[type]}`;
+
+  });
+
+};
+
+const activateWebpCompatibility = () => {
+
+  if (!getWebpCompatibilityInfo()) webpCompatibilityTest();
+
+};
 
 class ImageWebp extends PureComponent {
 
@@ -21,69 +80,31 @@ class ImageWebp extends PureComponent {
     if (this.actualSrc !== transparentImage) return;
     
     /**
-     * compatibilityInfo is common for all ImageWebp components in the project.
+     * webpCompatibilityInfo is common for all ImageWebp components in the project.
      *
      * Check if it is already set by another ImageWebp component.
      */
-    if (!compatibilityInfo) this._compatibilityTest();
+    if (!webpCompatibilityInfo) webpCompatibilityTest();
 
-    this.forceUpdate();
-
-  }
-
-  _compatibilityTest = () => {
-
-    /**
-     * Test images data from https://developers.google.com/speed/webp/faq#how_can_i_detect_browser_support_for_webp
-     */
-    const webpTestImages = {
-      lossy: 'UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoBAAEADsD+JaQAA3AAAAAA',
-      lossless: 'UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA==',
-      alpha: 'UklGRkoAAABXRUJQVlA4WAoAAAAQAAAAAAAAAAAAQUxQSAwAAAARBxAR/Q9ERP8DAABWUDggGAAAABQBAJ0BKgEAAQAAAP4AAA3AAP7mtQAAAA==',
-      animation: 'UklGRlIAAABXRUJQVlA4WAoAAAASAAAAAAAAAAAAQU5JTQYAAAD/////AABBTk1GJgAAAAAAAAAAAAAAAAAAAGQAAABWUDhMDQAAAC8AAAAQBxAREYiI/gcA',
-    };
-
-    compatibilityInfo = {};
-
-    Object.keys(webpTestImages).forEach((type) => {
-
-      /**
-       * Testing compatibility for this type
-       */
-      const xqImg = new Image();
-      xqImg.onload = () => {
-
-        compatibilityInfo[type] = (xqImg.width > 0) && (xqImg.height > 0);
-        localStorage.setItem('thisBrowserWebpCompatibilty', JSON.stringify(compatibilityInfo));
-
-      };
-      xqImg.onerror = () => {
-        
-        compatibilityInfo[type] = false;
-        localStorage.setItem('thisBrowserWebpCompatibilty', JSON.stringify(compatibilityInfo));
-
-      };
-      xqImg.src = `data:image/webp;base64,${webpTestImages[type]}`;
-
-    });
+    setTimeout(() => this.forceUpdate(), 0);
 
   }
 
-  _onLoad = (e) => {
+  onLoad = (e) => {
     
     const { onLoad } = this.props;
     if (onLoad && e.target.src !== transparentImage) onLoad(e);
 
   }
 
-  _onMouseMove = (e) => {
+  onMouseMove = (e) => {
     
     const { onMouseMove } = this.props;
     if (onMouseMove && e.target.src !== transparentImage) onMouseMove(e);
 
   }
 
-  _onMouseLeave = (e) => {
+  onMouseLeave = (e) => {
     
     const { onMouseLeave } = this.props;
     if (onMouseLeave && e.target.src !== transparentImage) onMouseLeave(e);
@@ -102,30 +123,52 @@ class ImageWebp extends PureComponent {
       alt,
     } = this.props;
 
-    if (compatibilityInfo) {
+    this.actualSrc = src;
 
-      if (src.lastIndexOf('.png') === src.length - 4) {
+    if (srcWebp) {
 
-        this.actualSrc = compatibilityInfo.alpha ? srcWebp : src;
+      if (!webpCompatibilityInfo) {
+
+        /**
+         * Compatibility test not done yet, it will be done in componentDidMount()
+         */
+        this.actualSrc = transparentImage;
 
       } else {
 
-        this.actualSrc = compatibilityInfo.lossy ? srcWebp : src;
+        const {
+          ALL,
+          NONE,
+          lossless,
+          alpha,
+          lossy,
+          animation,
+        } = webpCompatibilityInfo;
+
+        if (ALL) {
+
+          this.actualSrc = srcWebp;
+
+        } else if (!NONE) {
+
+          if (srcWebp.lastIndexOf('.alpha.webp') === src.length - 11) {
+
+            if (alpha) this.actualSrc = srcWebp;
+
+          } else if (srcWebp.lastIndexOf('.lossless.webp') === src.length - 14) {
+
+            if (lossless) this.actualSrc = srcWebp;
+
+          } else if (srcWebp.lastIndexOf('.animation.webp') === src.length - 15) {
+
+            if (animation) this.actualSrcalSrc = srcWebp;
+
+          } else if (lossy) this.actualSrc = srcWebp;
+
+        }
 
       }
-
-    } else {
-
-      /**
-       * Compatibility test not done yet, it will be done in componentDidMount()
-       *
-       * For now let's render a transparent image.
-       *
-       * this.actualSrc = transparentImage will also sign to
-       * componentDidMount() the need for the compatibility test
-       */
-      this.actualSrc = transparentImage;
-
+    
     }
 
     return (
@@ -133,9 +176,9 @@ class ImageWebp extends PureComponent {
         src={this.actualSrc}
         className={className}
         style={style}
-        onLoad={this._onLoad}
-        onMouseMove={this._onMouseMove}
-        onMouseLeave={this._onMouseLeave}
+        onLoad={this.onLoad}
+        onMouseMove={this.onMouseMove}
+        onMouseLeave={this.onMouseLeave}
         alt={alt}
         width={width}
         height={height}
@@ -148,7 +191,7 @@ class ImageWebp extends PureComponent {
 
 ImageWebp.propTypes = {
   src: PropTypes.string.isRequired,
-  srcWebp: PropTypes.string.isRequired,
+  srcWebp: PropTypes.string,
   className: PropTypes.string,
   style: PropTypes.objectOf(PropTypes.any),
   width: PropTypes.oneOfType([
@@ -166,6 +209,7 @@ ImageWebp.propTypes = {
 };
 
 ImageWebp.defaultProps = {
+  srcWebp: null,
   className: null,
   style: null,
   width: null,
@@ -178,3 +222,7 @@ ImageWebp.defaultProps = {
 
 
 export default ImageWebp;
+export {
+  getWebpCompatibilityInfo,
+  activateWebpCompatibility,
+};
